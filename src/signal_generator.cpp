@@ -624,6 +624,9 @@ void SignalGenerator::readPreferences()
 		resetZoom();
 	}
 	ui->instrumentNotes->setVisible(prefPanel->getInstrumentNotesActive());
+
+	bool enable_autoscale = prefPanel->getSig_gen_autoscale();
+	plot->setAutoScale(enable_autoscale);
 }
 
 void SignalGenerator::resetZoom()

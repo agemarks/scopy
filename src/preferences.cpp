@@ -40,6 +40,7 @@ Preferences::Preferences(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::Preferences),
 	sig_gen_periods_nr(1),
+	sig_gen_autoscale(false),
 	save_session_on_exit(true),
 	double_click_to_detach(false),
 	pref_api(new Preferences_API(this)),
@@ -108,6 +109,12 @@ Preferences::Preferences(QWidget *parent) :
 		}
 
 	});
+
+	connect(ui->signalGeneratorPlotAutoscaleCheckBox, &QCheckBox::stateChanged, [=](int state) {
+		sig_gen_autoscale = (!state ? false : true);
+		Q_EMIT notify();
+	});
+
 	connect(ui->saveSessionCheckBox, &QCheckBox::stateChanged, [=](int state) {
 		save_session_on_exit = (!state ? false : true);
 		Q_EMIT notify();
@@ -345,6 +352,7 @@ void Preferences::showEvent(QShowEvent *event)
 	setDynamicProperty(ui->sigGenNrPeriods, "valid", true);
 
 	ui->sigGenNrPeriods->setText(QString::number(sig_gen_periods_nr));
+	ui->signalGeneratorPlotAutoscaleCheckBox->setChecked(sig_gen_autoscale);
 	ui->oscLabelsCheckBox->setChecked(osc_labels_enabled);
 	ui->saveSessionCheckBox->setChecked(save_session_on_exit);
 	ui->doubleClickCheckBox->setChecked(double_click_to_detach);
@@ -524,6 +532,16 @@ void Preferences::setSig_gen_periods_nr(int value)
 	sig_gen_periods_nr = value;
 }
 
+bool Preferences::getSig_gen_autoscale() const
+{
+	return sig_gen_autoscale;
+}
+
+void Preferences::setSig_gen_autoscale(bool value)
+{
+	sig_gen_autoscale = value;
+}
+
 bool Preferences::getOsc_labels_enabled() const
 {
 	return osc_labels_enabled;
@@ -700,6 +718,16 @@ int Preferences_API::getSigGenNrPeriods() const
 void Preferences_API::setSigGenNrPeriods(const int& periods)
 {
 	preferencePanel->sig_gen_periods_nr = periods;
+}
+
+bool Preferences_API::getSigGenAutoscale() const
+{
+	return preferencePanel->sig_gen_autoscale;
+}
+
+void Preferences_API::setSigGenAutoscale(const bool &enabled)
+{
+	preferencePanel->sig_gen_autoscale = enabled;
 }
 
 bool Preferences_API::getSaveSession() const

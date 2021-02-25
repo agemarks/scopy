@@ -58,6 +58,9 @@ public:
 	int getSig_gen_periods_nr() const;
 	void setSig_gen_periods_nr(int value);
 
+	bool getSig_gen_autoscale() const;
+	void setSig_gen_autoscale(bool value);
+
 	bool getSave_session_on_exit() const;
 	void setSave_session_on_exit(bool value);
 
@@ -162,6 +165,7 @@ private:
 
 	bool osc_labels_enabled;
 	int sig_gen_periods_nr;
+	bool sig_gen_autoscale;
 	bool save_session_on_exit;
 	bool double_click_to_detach;
 	bool na_show_zero;
@@ -203,6 +207,7 @@ class Preferences_API : public ApiObject
 	Q_PROPERTY(bool osc_labels READ getOscLabelsEnabled WRITE setOscLabelsEnabled);
 	Q_PROPERTY(int sig_gen_nr_periods READ getSigGenNrPeriods WRITE
 	           setSigGenNrPeriods);
+	Q_PROPERTY(bool signal_generator_autoscale READ getSigGenAutoscale WRITE setSigGenAutoscale);
 	Q_PROPERTY(bool save_session_on_exit READ getSaveSession WRITE setSaveSession);
 	Q_PROPERTY(bool double_click_to_detach READ getDoubleClickToDetach WRITE setDoubleClickToDetach);
 	Q_PROPERTY(bool na_show_zero READ getNaShowZero WRITE setNaShowZero)
@@ -244,6 +249,9 @@ public:
 
 	int getSigGenNrPeriods() const;
 	void setSigGenNrPeriods(const int& periods);
+
+	bool getSigGenAutoscale() const;
+	void setSigGenAutoscale(const bool& enabled);
 
 	bool getSaveSession() const;
 	void setSaveSession(const bool& enabled);
